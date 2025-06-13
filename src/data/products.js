@@ -24,7 +24,7 @@ const productsData = [
       { name: 'L', additionalPrice: 3 },
       { name: 'XL', additionalPrice: 4 }
     ]
-  }
-];
+   }
+]
 
 export default productsData;
