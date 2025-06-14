@@ -4,17 +4,24 @@ import Button from '../Button/Button';
 import PropTypes, { object, string } from 'prop-types';
 import { useState } from 'react';
 
+//TODO wywalic console.logi
+
 const Product = (props) => {
 
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
   const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
+  const [currentAdditionalPrice, setCurrentAdditionalPrice] = useState(props.sizes[0].additionalPrice);
   const [color] = useState(props.colors);
 
   const prepareColorClassName = (color) => {
     return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()];
   }  
 
-//TODO wywalic console.logi
+  const getPrice = (product) => {
+    return props.basePrice + currentAdditionalPrice;
+  }
+
+  console.log('currentAdditionalPrice: ', currentAdditionalPrice); //TODO log
 
   return (
     <article className={styles.product}>
@@ -27,8 +34,7 @@ const Product = (props) => {
       <div>
         <header>
           <h2 className={styles.name}>{props.title}</h2>
-          <span className={styles.price}>{props.basePrice} €</span>
-
+          <span className={styles.price}>Price: {getPrice()} €</span>
         </header>
         <form>
           <div className={styles.sizes}>
@@ -36,7 +42,12 @@ const Product = (props) => {
             <ul className={styles.choices}>
               {props.sizes.map((size, index) => (
                 <li key={index}>
-                  <button type='button' onClick={(e) => setCurrentSize(size.name)} className={clsx(styles.size, size.name === currentSize && styles.active)}>{size.name}</button>
+                  <button type='button' 
+                    onClick={(e) => {
+                      setCurrentSize(size.name);
+                      setCurrentAdditionalPrice(size.additionalPrice);
+                    }} 
+                    className={clsx(styles.size, size.name === currentSize && styles.active)}>{size.name}</button>
                 </li>))}
             </ul>
           </div>
@@ -45,7 +56,9 @@ const Product = (props) => {
             <ul className={styles.choices}>
               {props.colors.map(item => (
                 <li key={item} >
-                  <button type='button' onClick={(e) => setCurrentColor(item)} className={clsx(prepareColorClassName(item), item === currentColor && styles.active)}></button>
+                  <button type='button' 
+                    onClick={(e) => setCurrentColor(item)} 
+                    className={clsx(prepareColorClassName(item), item === currentColor && styles.active)}></button>
                 </li>))}
             </ul>
           </div>
