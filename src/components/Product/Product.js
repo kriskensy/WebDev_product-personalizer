@@ -7,9 +7,16 @@ import productsData from '../../data/products';
 
 const Product = props => {
 
+  const [buttonsSizes] = useState(productsData[0].sizes);
+  const [buttonsColors] = useState(productsData[0].colors);
+
   const [currentName, setCurrentName] = useState(productsData[0].name);
   const [currentColor, setCurrentColor] = useState(productsData[0].colors[0]);
   const [currentSize, setCurrentSize] = useState(productsData[0].sizes[0].name);
+
+  const prepareColorClassName = color => {
+    return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()];
+  }
 
 //TODO wywalic console.logi
 
@@ -33,18 +40,22 @@ const Product = props => {
           <div className={styles.sizes}>
             <h3 className={styles.optionLabel}>Sizes</h3>
             <ul className={styles.choices}>
-              <li><Button>S</Button></li>
+              {/* <li><Button>S</Button></li>
               <li><Button>M</Button></li>
               <li><Button>L</Button></li>
-              <li><Button className={styles.active}>XL</Button></li>
+              <li><Button className={styles.active}>XL</Button></li> */}
+
+              {buttonsSizes.map(size => <li><Button key={size.name} onClick={() => setCurrentSize(size.name)} className={clsx(size.name === currentSize && styles.active)}>{size.name}</Button></li>)}
             </ul>
           </div>
           <div className={styles.colors}>
             <h3 className={styles.optionLabel}>Colors</h3>
             <ul className={styles.choices}>
-              <li><button type="button" className={clsx(styles.colorBlack, styles.active)} /></li>
+              {/* <li><button type="button" className={clsx(styles.colorBlack, styles.active)} /></li>
               <li><button type="button" className={clsx(styles.colorRed)} /></li>
-              <li><button type="button" className={clsx(styles.colorWhite)} /></li>
+              <li><button type="button" className={clsx(styles.colorWhite)} /></li> */}
+
+              {buttonsColors.map(color => <li><Button key={color} onClick={() => setCurrentColor(color)} className={clsx(prepareColorClassName(color), color === currentColor && styles.active)}></Button></li>)}
             </ul>
           </div>
           <Button className={styles.button}>
