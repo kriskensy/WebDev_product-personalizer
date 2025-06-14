@@ -17,11 +17,19 @@ const Product = (props) => {
     return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()];
   }  
 
-  const getPrice = (product) => {
+  const getPrice = () => {
     return props.basePrice + currentAdditionalPrice;
   }
 
-  console.log('currentAdditionalPrice: ', currentAdditionalPrice); //TODO log
+  const displayCartSummary = (e) => {
+    e.preventDefault();
+    console.log('Summary');
+    console.log('=================');
+    console.log('Name: ', props.name);
+    console.log('Price: ', getPrice());
+    console.log('Size: ', currentSize);
+    console.log('Color: ', currentColor);
+  }
 
   return (
     <article className={styles.product}>
@@ -62,7 +70,10 @@ const Product = (props) => {
                 </li>))}
             </ul>
           </div>
-          <Button className={styles.button}>
+          <Button 
+            type='button'
+            onClick={displayCartSummary}
+            className={styles.button}>
             <span className="fa fa-shopping-cart" />
           </Button>
         </form>
