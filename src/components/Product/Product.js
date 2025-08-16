@@ -1,10 +1,8 @@
 import styles from './Product.module.scss';
-import clsx from 'clsx';
-import Button from '../Button/Button';
 import PropTypes, { object, string } from 'prop-types';
 import { useState } from 'react';
-
-//TODO wywalic console.logi
+import ProductImage from '../ProductImage/ProductImage';
+import ProductForm from '../ProductForm/ProductForm';
 
 const Product = (props) => {
 
@@ -21,6 +19,7 @@ const Product = (props) => {
     return props.basePrice + currentAdditionalPrice;
   }
 
+  //TODO tego wyswietlania w konsoli brakuje jeszcze (etap 6 z modułu 15.3)
   const displayCartSummary = (e) => {
     e.preventDefault();
     console.log('Summary');
@@ -33,50 +32,26 @@ const Product = (props) => {
 
   return (
     <article className={styles.product}>
-      <div className={styles.imageContainer}>
-        <img 
-          className={styles.image}
-          alt={props.title}
-          src={`${process.env.PUBLIC_URL}/images/products/shirt-` + props.name + `--` + currentColor + `.jpg`} />
-      </div>
+
+      <ProductImage
+        title={props.title}
+        name={props.name}
+        currentColor={currentColor}/>
+
       <div>
         <header>
           <h2 className={styles.name}>{props.title}</h2>
           <span className={styles.price}>Price: {getPrice()} €</span>
         </header>
-        <form>
-          <div className={styles.sizes}>
-            <h3 className={styles.optionLabel}>Sizes</h3>
-            <ul className={styles.choices}>
-              {props.sizes.map((size, index) => (
-                <li key={index}>
-                  <button type='button' 
-                    onClick={(e) => {
-                      setCurrentSize(size.name);
-                      setCurrentAdditionalPrice(size.additionalPrice);
-                    }} 
-                    className={clsx(styles.size, size.name === currentSize && styles.active)}>{size.name}</button>
-                </li>))}
-            </ul>
-          </div>
-          <div className={styles.colors}>
-            <h3 className={styles.optionLabel}>Colors</h3>
-            <ul className={styles.choices}>
-              {props.colors.map(item => (
-                <li key={item} >
-                  <button type='button' 
-                    onClick={(e) => setCurrentColor(item)} 
-                    className={clsx(prepareColorClassName(item), item === currentColor && styles.active)}></button>
-                </li>))}
-            </ul>
-          </div>
-          <Button 
-            type='button'
-            onClick={displayCartSummary}
-            className={styles.button}>
-            <span className="fa fa-shopping-cart" />
-          </Button>
-        </form>
+
+        <ProductForm
+          sizes={props.sizes}
+          colors={props.colors}
+          prepareColorClassName={prepareColorClassName}
+          setCurrentColor={setCurrentColor}
+          setCurrentSize={setCurrentSize}
+          setCurrentAdditionalPrice={setCurrentAdditionalPrice}/>
+
       </div>
     </article>
   )
