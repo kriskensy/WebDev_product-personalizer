@@ -1,6 +1,6 @@
 import styles from './Product.module.scss';
 import PropTypes, { object, string } from 'prop-types';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductForm from '../ProductForm/ProductForm';
 
@@ -15,17 +15,16 @@ const Product = (props) => {
     return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()];
   }  
 
-  const getPrice = () => {
+  const price = useMemo(() => {
     return props.basePrice + currentAdditionalPrice;
-  }
+  }, [props.basePrice, currentAdditionalPrice]);
 
-  //TODO tego wyswietlania w konsoli brakuje jeszcze (etap 6 z modułu 15.3)
   const displayCartSummary = (e) => {
     e.preventDefault();
     console.log('Summary');
     console.log('=================');
     console.log('Name: ', props.name);
-    console.log('Price: ', getPrice());
+    console.log('Price: ', price);
     console.log('Size: ', currentSize);
     console.log('Color: ', currentColor);
   }
@@ -41,7 +40,7 @@ const Product = (props) => {
       <div>
         <header>
           <h2 className={styles.name}>{props.title}</h2>
-          <span className={styles.price}>Price: {getPrice()} €</span>
+          <span className={styles.price}>Price: {price} €</span>
         </header>
 
         <ProductForm
