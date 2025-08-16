@@ -37,7 +37,7 @@ ProductForm.propTypes = {
   currentColor: PropTypes.string.isRequired,
   setCurrentSize: PropTypes.func.isRequired,
   setCurrentColor: PropTypes.func.isRequired,
-  setCurrentAdditionalPrice: PropTypes.number.isRequired,
+  setCurrentAdditionalPrice: PropTypes.func.isRequired,
   displayCartSummary: PropTypes.func.isRequired
 }
 

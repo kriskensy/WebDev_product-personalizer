@@ -48,9 +48,12 @@ const Product = (props) => {
           sizes={props.sizes}
           colors={props.colors}
           prepareColorClassName={prepareColorClassName}
+          currentColor={currentColor}
+          currentSize={currentSize}
           setCurrentColor={setCurrentColor}
           setCurrentSize={setCurrentSize}
-          setCurrentAdditionalPrice={setCurrentAdditionalPrice}/>
+          setCurrentAdditionalPrice={setCurrentAdditionalPrice}
+          displayCartSummary={displayCartSummary}/>
 
       </div>
     </article>
